@@ -49,6 +49,10 @@
       <groupId>pentaho</groupId>
       <artifactId>pentaho-palo-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>metastore</artifactId>
+    </dependency>
 
   </dependencies>
 </project>

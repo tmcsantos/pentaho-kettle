@@ -16,6 +16,14 @@
     </file>
   </files>
 
+  <fileSets>
+    <!-- the staging dir -->
+    <fileSet>
+      <directory>${assembly.dir}</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
+
   <dependencySets>
     <dependencySet>
       <outputDirectory>.</outputDirectory>
@@ -23,16 +31,6 @@
         <include>org.pentaho.di.plugins:kettle-drools5-core:jar</include>
       </includes>
       <useProjectArtifact>false</useProjectArtifact>
-    </dependencySet>
-
-    <dependencySet>
-      <outputDirectory>lib</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <excludes>
-        <exclude>*:kettle-drools5-core:*</exclude>
-      </excludes>
     </dependencySet>
   </dependencySets>
 </assembly>

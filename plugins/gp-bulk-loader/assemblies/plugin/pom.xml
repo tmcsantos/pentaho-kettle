@@ -15,39 +15,12 @@
 
   <name>PDI GP Bulk Loader Plugin Distribution</name>
 
-  <properties>
-    <project.revision>8.0-SNAPSHOT</project.revision>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>gp-bulk-loader-core</artifactId>
-      <version>${project.revision}</version>
-      <scope>runtime</scope>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>create-archive</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>assembly/assembly.xml</descriptor>
-              </descriptors>
-              <appendAssemblyId>false</appendAssemblyId>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

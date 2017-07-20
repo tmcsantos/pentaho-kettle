@@ -26,6 +26,8 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
+      <outputDirectory>.</outputDirectory>
+      <useProjectArtifact>false</useProjectArtifact>
       <includes>
         <include>org.pentaho.di.plugins:get-previous-row-field-core:jar</include>
       </includes>

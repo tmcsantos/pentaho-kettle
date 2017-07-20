@@ -35,18 +35,6 @@
     <junit.version>4.7</junit.version>
     <kettle.version>${project.version}</kettle.version>
   </properties>
-  <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>src/main/filters</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-  </build>
 
   <dependencyManagement>
     <dependencies>
@@ -55,12 +43,24 @@
         <artifactId>kettle-engine</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
         <artifactId>kettle-core</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>

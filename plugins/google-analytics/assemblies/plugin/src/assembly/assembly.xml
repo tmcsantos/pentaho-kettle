@@ -13,17 +13,18 @@
       <filtered>true</filtered>
     </file>
   </files>
+  <fileSets>
+    <!-- the staging dir -->
+    <fileSet>
+      <directory>${assembly.dir}</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
   <dependencySets>
     <dependencySet>
       <useProjectArtifact>false</useProjectArtifact>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>.</outputDirectory>
       <scope>provided</scope>
-      <useTransitiveDependencies>false</useTransitiveDependencies>
-    </dependencySet>
-    <dependencySet>
-      <useProjectArtifact>false</useProjectArtifact>
-      <outputDirectory>/lib</outputDirectory>
-      <scope>runtime</scope>
       <useTransitiveDependencies>false</useTransitiveDependencies>
     </dependencySet>
   </dependencySets>

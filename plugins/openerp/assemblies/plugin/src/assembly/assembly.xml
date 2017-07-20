@@ -13,22 +13,20 @@
       <filtered>true</filtered>
     </file>
   </files>
+  <fileSets>
+    <!-- the staging dir -->
+    <fileSet>
+      <directory>${assembly.dir}</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
+
   <dependencySets>
     <dependencySet>
       <useProjectArtifact>false</useProjectArtifact>
       <includes>
         <include>org.pentaho.di.plugins:kettle-openerp-plugin-core:jar</include>
       </includes>
-    </dependencySet>
-    <dependencySet>
-      <useProjectArtifact>false</useProjectArtifact>
-      <includes>
-        <include>com.debortoliwines.openerp:openerp-java-api</include>
-        <include>org.apache.ws.commons.util:ws-commons-util</include>
-        <include>org.apache.xmlrpc:xmlrpc-client</include>
-        <include>org.apache.xmlrpc:xmlrpc-common</include>
-      </includes>
-      <outputDirectory>lib</outputDirectory>
     </dependencySet>
   </dependencySets>
 </assembly>

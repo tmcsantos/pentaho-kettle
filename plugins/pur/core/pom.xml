@@ -31,11 +31,12 @@
     <servlet-api.version>2.5</servlet-api.version>
     <gwt-servlet.version>2.5.1</gwt-servlet.version>
     <encoder.version>1.2</encoder.version>
-    <jersey-multipart.version>1.19.1</jersey-multipart.version>
+    <jersey.version>1.19.1</jersey.version>
     <enunciate-core-annotations.version>1.28</enunciate-core-annotations.version>
     <wadl-core.version>1.1.6</wadl-core.version>
     <wadl-ant.version>1.1.6</wadl-ant.version>
     <snakeyaml.version>1.7</snakeyaml.version>
+    <json-simple.version>1.1</json-simple.version>
 
     <!-- Test dependencies -->
     <mockito-core.version>1.9.5</mockito-core.version>
@@ -61,18 +62,36 @@
       <artifactId>kettle-core</artifactId>
       <version>${kettle.version}</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>pentaho-kettle</groupId>
       <artifactId>kettle-engine</artifactId>
       <version>${kettle.version}</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>pentaho-kettle</groupId>
       <artifactId>kettle-ui-swt</artifactId>
       <version>${kettle.version}</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Pentaho dependencies -->
@@ -96,6 +115,12 @@
       <groupId>pentaho</groupId>
       <artifactId>metastore</artifactId>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>pentaho</groupId>
@@ -220,7 +245,25 @@
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-multipart</artifactId>
-      <version>${jersey-multipart.version}</version>
+      <version>${jersey.version}</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>${jersey.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-json</artifactId>
+      <version>${jersey.version}</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -247,6 +290,13 @@
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <version>${snakeyaml.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>${json-simple.version}</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Test dependencies -->

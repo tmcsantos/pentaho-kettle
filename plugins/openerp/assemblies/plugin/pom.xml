@@ -16,6 +16,10 @@
 
   <name>PDI Openerp Plugin Distribution</name>
 
+  <properties>
+    <assembly.dir>${project.build.directory}/assembly</assembly.dir>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
@@ -23,4 +27,26 @@
       <version>${project.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-libs</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${assembly.dir}/lib</outputDirectory>
+              <includeScope>compile</includeScope>
+              <excludeArtifactIds>kettle-openerp-plugin-core</excludeArtifactIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

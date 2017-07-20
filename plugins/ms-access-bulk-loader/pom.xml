@@ -46,19 +46,51 @@
         <artifactId>kettle-engine</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>*</artifactId>
+            <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
         <artifactId>kettle-core</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>*</artifactId>
+            <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
         <artifactId>kettle-ui-swt</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>*</artifactId>
+            <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
       </dependency>
+
+      <dependency>
+        <groupId>com.healthmarketscience.jackcess</groupId>
+        <artifactId>jackcess</artifactId>
+        <version>1.2.6</version>
+        <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>*</artifactId>
+            <groupId>*</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
       <!-- SWT is required to compile,inorder to work with architecture -->
       <dependency>
         <groupId>org.eclipse.swt</groupId>
@@ -84,18 +116,13 @@
           </exclusion>
         </exclusions>
       </dependency>
+
       <!--test dependency-->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
         <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.healthmarketscience.jackcess</groupId>
-        <artifactId>jackcess</artifactId>
-        <version>1.2.6</version>
-        <scope>provided</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

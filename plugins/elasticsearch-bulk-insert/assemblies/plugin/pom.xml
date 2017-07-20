@@ -17,38 +17,37 @@
   <description>Elasticsearch Bulk Insert</description>
 
   <properties>
-    <project.revision>8.0-SNAPSHOT</project.revision>
+    <assembly.dir>${project.build.directory}/assembly</assembly.dir>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>elasticsearch-bulk-insert-core</artifactId>
-      <version>${project.revision}</version>
-      <scope>runtime</scope>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
+        <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>create-archive</id>
-            <phase>package</phase>
+            <id>add-libs</id>
+            <phase>generate-resources</phase>
             <goals>
-              <goal>single</goal>
+              <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <descriptors>
-                <descriptor>assembly/assembly.xml</descriptor>
-              </descriptors>
-              <appendAssemblyId>false</appendAssemblyId>
+              <outputDirectory>${assembly.dir}/lib</outputDirectory>
+              <includeScope>compile</includeScope>
+              <excludeArtifactIds>elasticsearch-bulk-insert-core</excludeArtifactIds>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
 </project>

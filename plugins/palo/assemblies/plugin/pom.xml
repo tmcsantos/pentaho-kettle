@@ -16,16 +16,37 @@
 
   <name>PDI Palo Plugin Distribution</name>
 
+  <properties>
+    <assembly.dir>${project.build.directory}/assembly</assembly.dir>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.pentaho.di.plugins</groupId>
       <artifactId>kettle-palo-plugin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>pentaho-palo-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-libs</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${assembly.dir}/lib</outputDirectory>
+              <includeScope>compile</includeScope>
+              <excludeArtifactIds>kettle-palo-plugin-core</excludeArtifactIds>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

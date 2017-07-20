@@ -36,6 +36,7 @@
     <junit.version>4.7</junit.version>
     <jets3t.version>0.7.0</jets3t.version>
     <kettle.version>${project.version}</kettle.version>
+    <commons-httpclient.version>3.1</commons-httpclient.version>
   </properties>
 
   <dependencyManagement>
@@ -45,12 +46,24 @@
         <artifactId>kettle-engine</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
         <artifactId>kettle-core</artifactId>
         <version>${kettle.version}</version>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
@@ -113,6 +126,20 @@
           </exclusion>
         </exclusions>
       </dependency>
+
+      <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+        <version>${commons-httpclient.version}</version>
+        <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
       <!-- test dependencies -->
       <dependency>
         <groupId>junit</groupId>

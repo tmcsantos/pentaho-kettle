@@ -30,6 +30,10 @@
       <artifactId>kettle-ui-swt</artifactId>
     </dependency>
     <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>metastore</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.swt</groupId>
       <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
     </dependency>
@@ -37,11 +41,6 @@
       <groupId>org.eclipse</groupId>
       <artifactId>jface</artifactId>
       <version>3.3.0-I20070606-0010</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.4</version>
     </dependency>
   </dependencies>
 </project>
