@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <name>PDI Abort Step Plugin</name>
 
+  <properties></properties>
   <modules>
     <module>assemblies</module>
     <module>impl</module>
