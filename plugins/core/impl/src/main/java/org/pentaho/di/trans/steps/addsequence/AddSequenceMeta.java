@@ -28,6 +28,7 @@ import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.SQLStatement;
+import org.pentaho.di.core.annotations.Step;
 import org.pentaho.di.core.database.Database;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleException;
@@ -56,7 +57,19 @@ import org.w3c.dom.Node;
  * Meta data for the Add Sequence step.
  *
  * Created on 13-may-2003
+ *  <step id="Sequence">
+ *    <description>i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.AddSequence</description>
+ *    <classname>org.pentaho.di.trans.steps.addsequence.AddSequenceMeta</classname>
+ *    <category>i18n:org.pentaho.di.trans.step:BaseStep.Category.Transform</category>
+ *    <tooltip>i18n:org.pentaho.di.trans.step:BaseStep.TypeTooltipDesc.Addsequence</tooltip>
+ *    <iconfile>ui/images/SEQ.svg</iconfile>
+ *    <documentation_url>http://wiki.pentaho.com/display/EAI/Add+sequence</documentation_url> <cases_url/> <forum_url/> </step>
+
  */
+@Step( id = "Sequence", image = "SEQ.svg", i18nPackageName = "org.pentaho.di.trans.steps.addsequence",
+  name = "i18n:org.pentaho.di.trans.step:BaseStep.TypeLongDesc.AddSequence", description = "i18n:org.pentaho.di.trans.step:BaseStep.TypeTooltipDesc.Addsequence",
+  documentationUrl = "http://wiki.pentaho.com/display/EAI/Add+sequence",
+  categoryDescription = "i18n:org.pentaho.di.trans.step:BaseStep.Category.Transform" )
 public class AddSequenceMeta extends BaseStepMeta implements StepMetaInterface {
   private static Class<?> PKG = AddSequenceMeta.class; // for i18n purposes, needed by Translator2!!
 
