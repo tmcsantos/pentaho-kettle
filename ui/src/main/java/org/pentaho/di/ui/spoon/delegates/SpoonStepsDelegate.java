@@ -34,6 +34,9 @@ import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.extension.ExtensionPointHandler;
 import org.pentaho.di.core.extension.KettleExtensionPoint;
 import org.pentaho.di.core.gui.Point;
+import org.pentaho.di.core.plugins.PluginInterface;
+import org.pentaho.di.core.plugins.PluginRegistry;
+import org.pentaho.di.core.plugins.StepPluginType;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.trans.Partitioner;
@@ -248,38 +251,49 @@ public class SpoonStepsDelegate extends SpoonDelegate {
   }
 
   public StepDialogInterface getStepDialog( StepMetaInterface stepMeta, TransMeta transMeta, String stepName ) throws KettleException {
-    String dialogClassName = stepMeta.getDialogClassName();
-
-    Class<?> dialogClass;
     Class<?>[] paramClasses = new Class<?>[] { Shell.class, Object.class, TransMeta.class, String.class };
     Object[] paramArgs = new Object[] { spoon.getShell(), stepMeta, transMeta, stepName };
-    Constructor<?> dialogConstructor;
+
+    PluginRegistry registry = PluginRegistry.getInstance();
+    PluginInterface plugin = registry.getPlugin( StepPluginType.class, stepMeta );
+
     try {
-      dialogClass = stepMeta.getClass().getClassLoader().loadClass( dialogClassName );
-      dialogConstructor = dialogClass.getConstructor( paramClasses );
-      return (StepDialogInterface) dialogConstructor.newInstance( paramArgs );
-    } catch ( Exception e ) {
-      // try the old way for compatibility
-      Method method = null;
+      Class<StepDialogInterface> dialogClass = registry.getClass( plugin, StepDialogInterface.class );
+      Constructor<StepDialogInterface> dialogConstructor = dialogClass.getConstructor( paramClasses );
+      return dialogConstructor.newInstance( paramArgs );
+    } catch ( Exception ignored ) {
+      // try the deprecated way
+      String dialogClassName = stepMeta.getDialogClassName();
       try {
-        Class<?>[] sig = new Class<?>[] { Shell.class, StepMetaInterface.class, TransMeta.class, String.class };
-        method = stepMeta.getClass().getDeclaredMethod( "getDialog", sig );
-        if ( method != null ) {
-          return (StepDialogInterface) method.invoke( stepMeta, new Object[] {
-            spoon.getShell(), stepMeta, transMeta, stepName } );
+        if ( log.isDebug() ) {
+          log.logDebug(
+            "Use of StepMetaInterface#getDialogClassName is deprecated, use StepDialog annotation instead." );
         }
-      } catch ( Throwable t ) {
-        // Ignore errors
+        Class<?> dialogClass = stepMeta.getClass().getClassLoader().loadClass( dialogClassName );
+        Constructor<?> dialogConstructor = dialogClass.getConstructor( paramClasses );
+        return (StepDialogInterface) dialogConstructor.newInstance( paramArgs );
+      } catch ( Exception e ) {
+        // try the old way for compatibility
+        Method method;
+        try {
+          Class<?>[] sig = new Class<?>[] { Shell.class, StepMetaInterface.class, TransMeta.class, String.class };
+          method = stepMeta.getClass().getDeclaredMethod( "getDialog", sig );
+          if ( method != null ) {
+            log.logDebug( "Use of StepMetaInterface#getDialog is deprecated, use StepDialog annotation instead." );
+            return (StepDialogInterface) method.invoke( stepMeta, new Object[] {
+              spoon.getShell(), stepMeta, transMeta, stepName } );
+          }
+        } catch ( Throwable ignored1 ) { }
+
+        String errorTitle =
+          BaseMessages.getString( PKG, "Spoon.Dialog.ErrorCreatingStepDialog.Title" );
+        String errorMsg =
+          BaseMessages.getString( PKG, "Spoon.Dialog.ErrorCreatingStepDialog.Message", stepMeta.getDialogClassName() );
+        new ErrorDialog(
+          spoon.getShell(), errorTitle, errorMsg, e );
+
+        throw new KettleException( e );
       }
-
-      String errorTitle =
-        BaseMessages.getString( PKG, "Spoon.Dialog.ErrorCreatingStepDialog.Title" );
-      String errorMsg =
-        BaseMessages.getString( PKG, "Spoon.Dialog.ErrorCreatingStepDialog.Message", stepMeta.getDialogClassName() );
-      new ErrorDialog(
-        spoon.getShell(), errorTitle, errorMsg, e );
-
-      throw new KettleException( e );
     }
   }
 
@@ -299,7 +313,7 @@ public class SpoonStepsDelegate extends SpoonDelegate {
       return (StepDialogInterface) dialogConstructor.newInstance( paramArgs );
     } catch ( Exception e ) {
       // try the old way for compatibility
-      Method method = null;
+      Method method;
       try {
         Class<?>[] sig = new Class<?>[] { Shell.class, StepMetaInterface.class, TransMeta.class };
         method = stepMeta.getClass().getDeclaredMethod( "getDialog", sig );
@@ -307,9 +321,7 @@ public class SpoonStepsDelegate extends SpoonDelegate {
           return (StepDialogInterface) method.invoke( stepMeta, new Object[] {
             spoon.getShell(), stepMeta, transMeta } );
         }
-      } catch ( Throwable t ) {
-        // Ignore errors
-      }
+      } catch ( Throwable ignored ) { }
 
       throw new KettleException( e );
     }
