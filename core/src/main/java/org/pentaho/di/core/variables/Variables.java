@@ -32,6 +32,7 @@ import org.pentaho.di.version.BuildVersion;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -79,8 +80,8 @@ public class Variables implements VariableSpace {
       // If space is not null and this variable is not already
       // the same object as the argument.
       String[] variableNames = space.listVariables();
-      for ( int idx = 0; idx < variableNames.length; idx++ ) {
-        properties.put( variableNames[idx], space.getVariable( variableNames[idx] ) );
+      for ( String variableName : variableNames ) {
+        properties.put( variableName, space.getVariable( variableName ) );
       }
     }
   }
@@ -126,9 +127,10 @@ public class Variables implements VariableSpace {
 
     // Clone the system properties to avoid ConcurrentModificationException while iterating
     // and then add all of them to properties variable.
-    Set<String> systemPropertiesNames = System.getProperties().stringPropertyNames();
+    Properties p = System.getProperties();
+    Set<String> systemPropertiesNames = p.stringPropertyNames();
     for ( String key : systemPropertiesNames ) {
-      getProperties().put( key, System.getProperties().getProperty( key ) );
+      properties.put( key, p.getProperty( key ) );
     }
 
     if ( parent != null ) {
