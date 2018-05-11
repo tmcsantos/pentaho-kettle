@@ -28,15 +28,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import sun.misc.resources.Messages;
+import org.pentaho.di.junit.rules.RestorePDIEnvironment;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({ Messages.class })
 public class GlobalMessagesTest {
+  @ClassRule public static RestorePDIEnvironment restorePDIEnvironment = new RestorePDIEnvironment();
+
   /*
    * https://github.com/pentaho/pentaho-kettle/pull/620
    * Reading properties file without native2ascii. (use UTF8 characters) #620

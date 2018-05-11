@@ -56,7 +56,13 @@ public class GlobalMessageUtil {
 
   protected static final LanguageChoice langChoice = LanguageChoice.getInstance();
 
-  protected static final ThreadLocal<Locale> threadLocales = new ThreadLocal();
+  protected static final ThreadLocal<Locale> threadLocales = new ThreadLocal<>();
+
+  private static final GlobalMessageControl controlRoot = new GlobalMessageControl( true );
+  private static final GlobalMessageControl noFallback = new GlobalMessageControl( false );
+
+  // Use a LinkedHashSet to maintain order
+  private static final LinkedHashSet<Locale> activeLocales = new LinkedHashSet<>();
 
   public static String formatErrorMessage( String key, String msg ) {
     String s2 = key.substring( 0, key.indexOf( '.' ) + "ERROR_0000".length() + 1 );
@@ -64,9 +70,7 @@ public class GlobalMessageUtil {
   }
 
   private static String decorateMissingKey( final String key ) {
-    final StringBuilder keyBuilder = new StringBuilder();
-    keyBuilder.append( '!' ).append( key ).append( '!' );
-    return keyBuilder.toString();
+    return "!" + key + '!';
   }
 
   public static String getString( ResourceBundle bundle, String key ) throws MissingResourceException {
@@ -174,14 +178,14 @@ public class GlobalMessageUtil {
    * @return Returns a {@link LinkedHashSet} of {@link Locale}s for consideration when translating text
    */
   public static LinkedHashSet<Locale> getActiveLocales() {
-    // Use a LinkedHashSet to maintain order
-    final LinkedHashSet<Locale> activeLocales = new LinkedHashSet<>();
-    // Example: messages_fr_FR.properties
-    activeLocales.add( langChoice.getDefaultLocale() );
-    // Example: messages_en_US.properties
-    activeLocales.add( FAILOVER_LOCALE );
-    // Example: messages.properties
-    activeLocales.add( Locale.ROOT );
+    if ( activeLocales.isEmpty() ) {
+      // Example: messages_fr_FR.properties
+      activeLocales.add( langChoice.getDefaultLocale() );
+      // Example: messages_en_US.properties
+      activeLocales.add( FAILOVER_LOCALE );
+      // Example: messages.properties
+      activeLocales.add( Locale.ROOT );
+    }
     return activeLocales;
   }
 
@@ -333,17 +337,14 @@ public class GlobalMessageUtil {
    */
   public static ResourceBundle getBundle( final Locale locale, final String packagePath, final Class<?> resourceClass,
                                           final boolean fallbackOnRoot ) {
-    final GlobalMessageControl control = new GlobalMessageControl( fallbackOnRoot );
+    final GlobalMessageControl control = fallbackOnRoot ? controlRoot : noFallback;
     final String resourceName = control.toResourceName( control.toBundleName( packagePath, locale ), "properties" );
 
     ResourceBundle bundle;
     try {
-      bundle = ResourceBundle.getBundle( packagePath, locale, resourceClass.getClassLoader(),
-        new GlobalMessageControl( fallbackOnRoot ) );
+      bundle = ResourceBundle.getBundle( packagePath, locale, resourceClass.getClassLoader(), control );
     } catch ( final MissingResourceException e ) {
-      final StringBuilder msg = new StringBuilder();
-      msg.append( "Unable to find properties file '" ).append( resourceName ).append( "': " ).append( e.toString() );
-      throw new MissingResourceException( msg.toString(), resourceClass.getName(), packagePath );
+      throw new MissingResourceException( "Unable to find properties file '" + resourceName + "': " + e.toString(), resourceClass.getName(), packagePath );
     }
     return bundle;
   }

@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -307,7 +308,7 @@ public class BaseStep implements VariableSpace, StepInterface, LoggingObjectInte
    * the map is the filename
    */
   private final Map<String, ResultFile> resultFiles;
-  private final ReentrantReadWriteLock resultFilesLock;
+//  private final ReentrantReadWriteLock resultFilesLock;
 
   /**
    * This contains the first row received and will be the reference row. We used it to perform extra checking: see if we
@@ -533,8 +534,7 @@ public class BaseStep implements VariableSpace, StepInterface, LoggingObjectInte
     }
 
     rowListeners = new CopyOnWriteArrayList<RowListener>();
-    resultFiles = new HashMap<String, ResultFile>();
-    resultFilesLock = new ReentrantReadWriteLock();
+    resultFiles = new ConcurrentHashMap<>();
 
     repartitioning = StepPartitioningMeta.PARTITIONING_METHOD_NONE;
     partitionTargets = new Hashtable<String, BlockingRowSet>();
@@ -3581,29 +3581,16 @@ public class BaseStep implements VariableSpace, StepInterface, LoggingObjectInte
    * @param resultFile the result file
    */
   public void addResultFile( ResultFile resultFile ) {
-    ReentrantReadWriteLock.WriteLock lock = resultFilesLock.writeLock();
-    lock.lock();
-    try {
-      resultFiles.put( resultFile.getFile().toString(), resultFile );
-    } finally {
-      lock.unlock();
-    }
+    resultFiles.put( resultFile.getFile().toString(), resultFile );
   }
 
-  /*
-   * (non-Javadoc)
+  /**
    *
    * @see org.pentaho.di.trans.step.StepInterface#getResultFiles()
    */
   @Override
   public Map<String, ResultFile> getResultFiles() {
-    ReentrantReadWriteLock.ReadLock lock = resultFilesLock.readLock();
-    lock.lock();
-    try {
-      return new HashMap<String, ResultFile>( this.resultFiles );
-    } finally {
-      lock.unlock();
-    }
+    return new HashMap<String, ResultFile>( this.resultFiles );
   }
 
   /*

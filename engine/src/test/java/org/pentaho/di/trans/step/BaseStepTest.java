@@ -239,11 +239,6 @@ public class BaseStepTest {
         try {
           for ( int i = 0; i < FILES_AMOUNT; i++ ) {
             step.addResultFile( new ResultFile( 0, new NonAccessibleFileObject( Integer.toString( i ) ), null, null ) );
-            try {
-              Thread.sleep( 1 );
-            } catch ( Exception e ) {
-              fail( e.getMessage() );
-            }
           }
         } finally {
           complete.set( true );

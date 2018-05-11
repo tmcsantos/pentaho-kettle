@@ -41,6 +41,7 @@ import org.pentaho.di.core.row.value.timestamp.SimpleTimestampFormat;
 import org.pentaho.di.core.vfs.KettleVFS;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.core.xml.XMLHandlerCache;
+import org.pentaho.di.i18n.LanguageChoice;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -112,6 +113,7 @@ public class RestorePDIEnvironment extends ExternalResource {
     TimeZone.setDefault( TimeZone.getTimeZone( "UTC" ) );
     Locale.setDefault( Locale.US );
     Locale.setDefault( Locale.Category.FORMAT, Locale.US );
+    LanguageChoice.getInstance().setDefaultLocale( Locale.US );
 
     tmpKettleHome = Files.createTempDirectory( Long.toString( System.nanoTime() ) );
     System.setProperty( "file.encoding", "UTF-8" );
@@ -145,6 +147,7 @@ public class RestorePDIEnvironment extends ExternalResource {
     Locale.setDefault( Locale.Category.FORMAT, originalFormatLocale );
     TimeZone.setDefault( originalTimezone );
     FileUtils.deleteQuietly( tmpKettleHome.toFile() );
+    LanguageChoice.getInstance().setDefaultLocale( originalLocale );
   }
 
 }
