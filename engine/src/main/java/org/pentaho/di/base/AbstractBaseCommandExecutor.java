@@ -45,7 +45,7 @@ import org.pentaho.metastore.stores.delegate.DelegatingMetaStore;
 import org.pentaho.di.version.BuildVersion;
 
 public abstract class AbstractBaseCommandExecutor {
-  private boolean test = false;
+  private boolean test = true;
 
   private SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss.SSS" );
 
