@@ -42,7 +42,7 @@ public class PropertySetter {
   // for later maybe; when we have a centralized message repository.
   // public static final String MESSAGE = "message";
 
-  private boolean test = false;
+  private boolean test = true;
   public static final String OGNL = "ognl";
   public static final String I18N = "i18n";
 
