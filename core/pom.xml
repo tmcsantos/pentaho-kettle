@@ -9,7 +9,7 @@
   <version>8.3.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>PDI Core</name>
+  <name>PDI Core 2</name>
 
   <parent>
     <groupId>org.pentaho.di</groupId>
