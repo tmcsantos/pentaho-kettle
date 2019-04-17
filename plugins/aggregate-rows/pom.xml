@@ -12,7 +12,7 @@
   <version>9.0.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>PDI Aggregate Rows Plugin2</name>
+  <name>PDI Aggregate Rows Plugin 2</name>
   <description>Container pom for aggregate-rows-core</description>
 
   <modules>
