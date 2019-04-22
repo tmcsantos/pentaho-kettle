@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>pdi-core-plugins-impl</artifactId>
-  <name>PDI Core Plugins Impl</name>
+  <name>PDI Core Plugins Impl 2</name>
 
   <properties>
     <mockito-core.version>1.10.19</mockito-core.version>
