@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>pdi-core-plugins-ui</artifactId>
-  <name>PDI Core Plugins UI</name>
+  <name>PDI Core Plugins UI 2</name>
 
   <dependencies>
     <dependency>
