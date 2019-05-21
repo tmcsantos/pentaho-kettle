@@ -60,6 +60,7 @@ public class JobEntryAbort extends JobEntryBase implements Cloneable, JobEntryIn
   private static Class<?> PKG = JobEntryAbort.class; // for i18n purposes, needed by Translator2!!
 
   private String messageAbort;
+  public String[] stuff = new String[] {"yada", "xpto"};
 
   public JobEntryAbort( String n, String scr ) {
     super( n, "" );
